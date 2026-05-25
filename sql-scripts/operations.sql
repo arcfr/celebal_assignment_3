@@ -45,7 +45,7 @@ SELECT customer_id,
     ) AS row_num
 FROM orders;
 
--- 
+-- Combine JOIN + CTE + Window Functions for final result (customer, total sales, rank)
 WITH customer_sales AS (
     SELECT customer_id,
         ROUND(SUM(price), 4) AS total_sales
@@ -63,6 +63,7 @@ FROM customers c
     JOIN customer_sales cs ON c.customer_id = cs.customer_id
 ORDER BY customer_rank;
 
+-- Crete view for business query lookup redundancy avoidance abd business queries 
 CREATE VIEW IF NOT EXISTS customer_sales_summary AS
 SELECT c.customer_id,
     CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
